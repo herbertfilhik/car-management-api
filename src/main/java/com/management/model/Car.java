@@ -1,17 +1,31 @@
 package com.management.model;
 
-/*import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
 @Entity
 public class Car {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String brand;
     private String model;
-    private int year;
+    private Integer year;
 
-    // Getters and setters
+    // Constructors, getters, and setters
+    public Car() {
+    }
+
+    public Car(String brand, String model, Integer year) {
+        this.brand = brand;
+        this.model = model;
+        this.year = year;
+    }
+
+    // Getters and Setters
     public Long getId() {
         return id;
     }
@@ -36,12 +50,11 @@ public class Car {
         this.model = model;
     }
 
-    public int getYear() {
+    public Integer getYear() {
         return year;
     }
 
-    public void setYear(int year) {
+    public void setYear(Integer year) {
         this.year = year;
     }
 }
-*/
