@@ -1,6 +1,6 @@
 package com.management.model;
 
-import jakarta.persistence.*;
+/*import jakarta.persistence.*;
 
 @Entity
 public class Car {
@@ -44,3 +44,4 @@ public class Car {
         this.year = year;
     }
 }
+*/

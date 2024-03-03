@@ -1,6 +1,6 @@
 package com.management.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
+/*import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.management.model.Car;
 import com.management.repository.CarRepository;
@@ -45,4 +45,4 @@ public class CarController {
     public void deleteCar(@PathVariable Long id) {
         carRepository.deleteById(id);
     }
-}
+}*/
