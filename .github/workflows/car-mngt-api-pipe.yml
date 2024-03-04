@@ -13,10 +13,10 @@ jobs:
     
     services:
       mysql:
-        image: mysql:8.0
+        image: mysql:8.3.0
         env:
-          MYSQL_ROOT_PASSWORD: senha
-          MYSQL_DATABASE: nome_do_seu_banco
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: car_management_db
         ports:
           - 3306:3306
         options: >-
