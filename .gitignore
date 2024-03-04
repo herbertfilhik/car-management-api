@@ -31,3 +31,10 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Other ###
+.metadata
+.mvn/wrapper
+.sonarlint/storage
+
+
