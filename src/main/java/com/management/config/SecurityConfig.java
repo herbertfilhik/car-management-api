@@ -14,7 +14,9 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
+        	.csrf().disable()
             .authorizeRequests()
+            .requestMatchers("/cars").hasRole("ADMIN") // Exemplo: apenas usuários com o papel 'ADMIN' podem acessar
             .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll() // Permite o acesso a recursos estáticos
             .anyRequest().authenticated()
             .and()

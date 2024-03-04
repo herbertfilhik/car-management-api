@@ -3,10 +3,12 @@ package com.management.controller;
 import com.management.model.Car;
 import com.management.repository.CarRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/cars")
@@ -21,8 +23,16 @@ public class CarController {
     }
 
     @PostMapping
-    public Car addCar(@RequestBody Car car) {
-        return carRepository.save(car);
+    public ResponseEntity<?> addCar(@RequestBody Car car) {
+        // Verifica se já existe um carro com a mesma marca, modelo e ano
+        Optional<Car> existingCar = carRepository.findByBrandAndModelAndYear(car.getBrand(), car.getModel(), car.getYear());
+        if (existingCar.isPresent()) {
+            // Se já existir, retorna uma resposta de conflito
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Carro já incluído anteriormente.");
+        }
+        // Se não existir, salva o novo carro
+        Car savedCar = carRepository.save(car);
+        return ResponseEntity.ok(savedCar);
     }
 
     @GetMapping("/{id}")
