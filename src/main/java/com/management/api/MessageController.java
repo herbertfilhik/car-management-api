@@ -1,4 +1,4 @@
-package com.management.controller;
+package com.management.api;
 
 import org.springframework.web.bind.annotation.RestController;
 import org.slf4j.Logger;
