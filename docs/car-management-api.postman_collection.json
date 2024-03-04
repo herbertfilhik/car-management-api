@@ -25,6 +25,13 @@
 							"} else {\r",
 							"    console.log(\"CSRF Token not found\");\r",
 							"}\r",
+							"\r",
+							"/*var responseHtml = pm.response.text();\r",
+							"var csrfToken = responseHtml.match(/name=\"_csrf\"\\s+type=\"hidden\"\\s+value=\"([^\"]+)\"/);\r",
+							"if (csrfToken.length > 1) {\r",
+							"    pm.environment.set(\"csrf_token\", csrfToken[1]);\r",
+							"    console.log(\"CSRF Token:\", csrfToken[1])\r",
+							"}*/\r",
 							""
 						],
 						"type": "text/javascript"
@@ -205,6 +212,83 @@
 					]
 				},
 				"url": "http://localhost:9090/logout"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:9090/cars/{idCar}",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:9090/cars/16"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:9090/cars - DELETE",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Cookie",
+						"value": "{{cookies}}",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "X-CSRF-TOKEN",
+						"value": "{{csrf_token}}",
+						"type": "text"
+					}
+				],
+				"url": "http://localhost:9090/cars/15"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:9090/cars/3 - POST CAR ID",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "X-CSRF-TOKEN",
+						"value": "C_tMnfkPWvHCXnYedNuI1RptZXG5RlkfJvl_qCmMbKdU2j3nPZgvr8ltbMDvbkF7TPa85nsISBOBcTwyRMAdzRG8CJVg61jf"
+					},
+					{
+						"key": "Cookie",
+						"value": "JSESSIONID=808D97E34D3927186FD8DBA4B6B4DD38"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"brand\": \"Toyota\",\r\n    \"model\": \"Corolla Cross\",\r\n    \"year\": 2020\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:9090/cars/16"
 			},
 			"response": []
 		}
