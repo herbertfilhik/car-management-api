@@ -48,6 +48,8 @@ mvnw spring-boot:run
 
 Este guia assume que você já tenha a coleção do Postman para a Car Management API importada em seu ambiente do Postman.
 
+##### Baixe a Collection
+
 [Collection do Postman](https://github.com/herbertfilhik/car-management-api/blob/main/docs/car-management-api.postman_collection.json)
 
 **Configuração Inicial**
