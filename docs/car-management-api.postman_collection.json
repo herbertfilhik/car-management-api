@@ -220,7 +220,69 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"url": "http://localhost:9090/cars/16"
+				"url": "http://localhost:9090/cars"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:9090/cars/3 - POST CAR ID",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "X-CSRF-TOKEN",
+						"value": "{{csrf_token}}"
+					},
+					{
+						"key": "Cookie",
+						"value": "{{cookies}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"brand\": \"Toyota\",\r\n    \"model\": \"Corolla\",\r\n    \"year\": 2020\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:9090/cars"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:9090/cars/3 - PUT CAR ID",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "X-CSRF-TOKEN",
+						"value": "{{csrf_token}}"
+					},
+					{
+						"key": "Cookie",
+						"value": "{{cookies}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"brand\": \"Toyota\",\r\n    \"model\": \"Corolla Cross\",\r\n    \"year\": 2020\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:9090/cars/18"
 			},
 			"response": []
 		},
@@ -257,38 +319,7 @@
 						"type": "text"
 					}
 				],
-				"url": "http://localhost:9090/cars/15"
-			},
-			"response": []
-		},
-		{
-			"name": "http://localhost:9090/cars/3 - POST CAR ID",
-			"request": {
-				"method": "PUT",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json"
-					},
-					{
-						"key": "X-CSRF-TOKEN",
-						"value": "C_tMnfkPWvHCXnYedNuI1RptZXG5RlkfJvl_qCmMbKdU2j3nPZgvr8ltbMDvbkF7TPa85nsISBOBcTwyRMAdzRG8CJVg61jf"
-					},
-					{
-						"key": "Cookie",
-						"value": "JSESSIONID=808D97E34D3927186FD8DBA4B6B4DD38"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"brand\": \"Toyota\",\r\n    \"model\": \"Corolla Cross\",\r\n    \"year\": 2020\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": "http://localhost:9090/cars/16"
+				"url": "http://localhost:9090/cars/18"
 			},
 			"response": []
 		}
