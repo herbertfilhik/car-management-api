@@ -62,7 +62,9 @@ Este guia assume que você já tenha a coleção do Postman para a Car Managemen
     - Após o login bem-sucedido, copie o valor do `JSESSIONID` retornado nos headers de resposta e o valor do token CSRF, se aplicável.
 - **Configure o Ambiente:** Adicione o `JSESSIONID` e o token CSRF como variáveis no ambiente do Postman.
 
-![Descrição da captura de tela](https://github.com/herbertfilhik/StudyGroupsManager/blob/main/src/docandimagestask/report_visualstudio_exectest.png)
+![Descrição da captura de tela](https://github.com/herbertfilhik/car-management-api/blob/main/docs/endpoint-01.png)
+
+![Descrição da captura de tela](https://github.com/herbertfilhik/car-management-api/blob/main/docs/endpoint-02.png)
 
 **Testando Endpoints**
 - **Listar Veículos:** Acesse o endpoint `GET /cars` para listar todos os veículos cadastrados.
