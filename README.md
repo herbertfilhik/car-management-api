@@ -7,6 +7,7 @@
 - [Tecnologias Utilizadas](#tecnologias-utilizadas)
 - [Comandos para baixar e executar o projeto](#comandos-para-baixar-e-executar-o-projeto)
 - [Testando os EndPoints](#testando-os-endpoints)
+- [Leitura para referencia](#leitura-para-referencia)
 
 ## Car Management API
 A Car Management API é um sistema de gestão de veículos projetado para facilitar o controle e manutenção de informações sobre carros. Este projeto fornece uma solução backend robusta, construída com Spring Boot, que permite operações CRUD (Criar, Ler, Atualizar, Deletar) através de uma interface RESTful.
@@ -75,6 +76,6 @@ Este guia assume que você já tenha a coleção do Postman para a Car Managemen
 - **Verifique as Respostas:** Para cada requisição, verifique o corpo da resposta e os códigos de status para garantir que a operação foi bem-sucedida.
 - **Gerencie suas Variáveis:** Utilize as variáveis do ambiente do Postman para facilitar a manutenção e evitar a repetição de valores comuns, como URL base e tokens.
 
-### Leitura para referência
+### Leitura para referencia
 - https://spring.io/guides/gs/securing-web
 - https://github.com/spring-guides/gs-securing-web
