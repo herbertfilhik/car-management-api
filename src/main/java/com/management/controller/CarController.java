@@ -13,7 +13,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/cars")
 public class CarController {
-
+	
     @Autowired
     private CarRepository carRepository;
 
@@ -40,6 +40,19 @@ public class CarController {
         return carRepository.findById(id)
                 .map(car -> ResponseEntity.ok().body(car))
                 .orElse(ResponseEntity.notFound().build());
+    }
+    
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteCar(@PathVariable Long id) {
+        // Verifica se o carro com o ID fornecido existe
+        boolean exists = carRepository.existsById(id);
+        if (exists) {
+            carRepository.deleteById(id);
+            return ResponseEntity.ok("Carro deletado com sucesso!");
+        } else {
+            //return ResponseEntity.notFound().build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Carro não encontrado!");
+        }
     }
 
     // Add more endpoints as needed
