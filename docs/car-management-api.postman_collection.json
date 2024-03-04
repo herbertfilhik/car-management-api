@@ -1,0 +1,212 @@
+{
+	"info": {
+		"_postman_id": "96471390-249d-4010-98d4-9ecbf02b1e05",
+		"name": "car-management-api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "543684"
+	},
+	"item": [
+		{
+			"name": "http://localhost:9090/",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var responseHtml = pm.response.text();\r",
+							"//var csrfTokenRegex = /name=\"_csrf\" value=\"(.+?)\"/;\r",
+							"var csrfTokenRegex = /name=\"_csrf\"\\s+type=\"hidden\"\\s+value=\"([^\"]+)\"/;\r",
+							"var match = csrfTokenRegex.exec(responseHtml);\r",
+							"\r",
+							"if (match !== null) {\r",
+							"    var csrfToken = match[1];\r",
+							"    pm.environment.set(\"csrf_token\", csrfToken);\r",
+							"    console.log(\"CSRF Token:\", csrfToken); // Para imprimir no console do Postman\r",
+							"} else {\r",
+							"    console.log(\"CSRF Token not found\");\r",
+							"}\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Host",
+						"value": "localhost:9090"
+					},
+					{
+						"key": "Upgrade-Insecure-Requests",
+						"value": "1"
+					}
+				],
+				"url": "http://localhost:9090/login"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:9090/login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var cookies = pm.cookies.toObject();\r",
+							"\r",
+							"if (cookies !== null) {\r",
+							"    pm.environment.set(\"JSESSIONID\", cookies.JSESSIONID);\r",
+							"    console.log(\"JSESSIONID:\", cookies); // Para imprimir no console do Postman\r",
+							"} else {\r",
+							"    console.log(\"JSESSIONID not found\");\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Host",
+						"value": "localhost:9090"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "user",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "password",
+							"type": "text"
+						},
+						{
+							"key": "_csrf",
+							"value": "{{csrf_token}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": "http://localhost:9090/login"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:9090/message",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:9090/message"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:9090/ Chama Again",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var responseHtml = pm.response.text();\r",
+							"//var csrfTokenRegex = /name=\"_csrf\" value=\"(.+?)\"/;\r",
+							"var csrfTokenRegex = /name=\"_csrf\"\\s+type=\"hidden\"\\s+value=\"([^\"]+)\"/;\r",
+							"var match = csrfTokenRegex.exec(responseHtml);\r",
+							"\r",
+							"if (match !== null) {\r",
+							"    var csrfToken = match[1];\r",
+							"    pm.environment.set(\"csrf_token\", csrfToken);\r",
+							"    console.log(\"CSRF Token:\", csrfToken); // Para imprimir no console do Postman\r",
+							"} else {\r",
+							"    console.log(\"CSRF Token not found\");\r",
+							"}\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Host",
+						"value": "localhost:9090"
+					},
+					{
+						"key": "Upgrade-Insecure-Requests",
+						"value": "1"
+					}
+				],
+				"url": "http://localhost:9090/login"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:9090/logout",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"// Este script deve ser colocado na aba \"Pre-request Script\" da requisição de logout\r",
+							"pm.cookies.add({\r",
+							"    domain: 'localhost',\r",
+							"    path: '/',\r",
+							"    name: 'JSESSIONID',\r",
+							"    value: pm.environment.get(\"JSESSIONID\"),\r",
+							"    httpOnly: true\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "{{cookies}}",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "_csrf",
+							"value": "{{csrf_token}}",
+							"type": "text"
+						},
+						{
+							"key": "",
+							"value": "",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": "http://localhost:9090/logout"
+			},
+			"response": []
+		}
+	]
+}

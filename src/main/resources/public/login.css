@@ -1,0 +1,65 @@
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Fonte mais moderna */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #eceff1; /* Cor de fundo mais suave */
+  margin: 0;
+}
+
+.login-container {
+  background: #fff;
+  padding: 50px; /* Padding maior para mais espaço */
+  border-radius: 10px; /* Bordas mais arredondadas */
+  box-shadow: 0 8px 16px rgba(0,0,0,0.1); /* Sombra mais suave e mais dispersa */
+  width: 340px; /* Largura ajustada */
+  text-align: center;
+  transition: transform 0.3s; /* Transição suave para hover */
+}
+
+.login-container:hover {
+  transform: translateY(-5px); /* Efeito flutuante sutil */
+}
+
+.login-container h2 {
+  margin: 0 0 30px;
+  font-size: 26px; /* Tamanho de fonte ligeiramente maior */
+  color: #333;
+  font-weight: 300; /* Fonte mais fina e moderna */
+}
+
+.input-group {
+  margin-bottom: 25px; /* Espaçamento maior entre os campos */
+}
+
+.input-group input {
+  width: 100%;
+  padding: 15px; /* Padding maior para melhor toque */
+  border: 2px solid #bdbdbd; /* Borda mais destacada */
+  border-radius: 8px; /* Bordas mais arredondadas */
+  box-sizing: border-box;
+  transition: border-color 0.3s; /* Transição suave para a borda */
+}
+
+.input-group input:focus {
+  border-color: #007bff; /* Destaque quando focado */
+  outline: none; /* Remove o outline padrão */
+}
+
+.input-group button {
+  width: 100%;
+  padding: 15px; /* Padding maior para melhor toque */
+  border: none;
+  border-radius: 8px; /* Bordas mais arredondadas */
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s; /* Transição suave para o fundo */
+  font-weight: bold; /* Fonte mais grossa */
+}
+
+.input-group button:hover {
+  background-color: #0056b3;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Sombra ao passar o mouse */
+}
