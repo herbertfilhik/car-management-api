@@ -80,6 +80,14 @@ Este guia assume que você já tenha a coleção do Postman para a Car Managemen
 - **Excluir Veículo:** Para remover um veículo, use o endpoint `DELETE /cars/{id}`, substituindo `{id}` pelo ID do veículo que deseja excluir.
     - Certifique-se de adicionar o `JSESSIONID` e o token CSRF nos headers.
 
+![Descrição da captura de tela](https://github.com/herbertfilhik/car-management-api/blob/main/docs/endpoint-03.png)
+
+![Descrição da captura de tela](https://github.com/herbertfilhik/car-management-api/blob/main/docs/endpoint-04.png)
+
+![Descrição da captura de tela](https://github.com/herbertfilhik/car-management-api/blob/main/docs/endpoint-05.png)
+
+![Descrição da captura de tela](https://github.com/herbertfilhik/car-management-api/blob/main/docs/endpoint-06.png)
+
 **Dicas Adicionais**
 - **Verifique as Respostas:** Para cada requisição, verifique o corpo da resposta e os códigos de status para garantir que a operação foi bem-sucedida.
 - **Gerencie suas Variáveis:** Utilize as variáveis do ambiente do Postman para facilitar a manutenção e evitar a repetição de valores comuns, como URL base e tokens.
