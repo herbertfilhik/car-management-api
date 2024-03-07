@@ -1,6 +1,6 @@
 package com.management.service;
 
-import com.management.model.Car;
+import com.management.model.CarModel;
 import com.management.repository.CarRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,10 +17,10 @@ public class CarService {
         this.carRepository = carRepository;
     }
 
-    public Car saveCar(Car car) {
-        validateLicensePlate(car.getLicensePlate());
+    public CarModel saveCar(CarModel carModel) throws IllegalArgumentException {
+        validateLicensePlate(carModel.getPlate());
         // Aqui entraria o restante da lógica de negócio e chamadas ao repositório
-        return carRepository.save(car);
+        return carRepository.save(carModel);
     }
 
     private void validateLicensePlate(String licensePlate) {

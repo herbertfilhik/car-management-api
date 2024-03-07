@@ -1,7 +1,9 @@
 package com.management.controller;
 
-import com.management.model.Car;
+import com.management.model.CarModel;
 import com.management.repository.CarRepository;
+import com.management.service.CarService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,27 +20,40 @@ public class CarController {
 	@Autowired
 	private CarRepository carRepository;
 
+	@Autowired
+	private CarService carService;
+
 	@GetMapping
-	public List<Car> getAllCars() {
+	public List<CarModel> getAllCars() {
 		return carRepository.findAll();
 	}
 
 	@PostMapping
-	public ResponseEntity<?> addCar(@RequestBody Car car) {
-		// Verifica se já existe um carro com a mesma marca, modelo e ano
-		Optional<Car> existingCar = carRepository.findByBrandAndModelAndYear(car.getBrand(), car.getModel(),
-				car.getYear());
-		if (existingCar.isPresent()) {
-			// Se já existir, retorna uma resposta de conflito
-			return ResponseEntity.status(HttpStatus.CONFLICT).body("Carro já incluído anteriormente.");
+	public ResponseEntity<?> addCar(@RequestBody CarModel carModel) {
+		if (carModel.getPlate() == null || carModel.getPlate().isEmpty()) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("O campo 'plate' é obrigatório.");
 		}
-		// Se não existir, salva o novo carro
-		Car savedCar = carRepository.save(car);
-		return ResponseEntity.ok(savedCar);
+
+		try {
+			// Verifica se já existe um carro com a mesma marca, modelo e ano
+			Optional<CarModel> existingCar = carRepository.findByBrandAndModelAndYearAndPlate(carModel.getBrand(), carModel.getModel(),
+					carModel.getYear(), carModel.getPlate());
+			if (existingCar.isPresent()) {
+				// Se já existir, retorna uma resposta de conflito
+				return ResponseEntity.status(HttpStatus.CONFLICT).body("Carro já incluído anteriormente.");
+			}
+
+			// Se não existir, tenta salvar o novo carro e valida a placa
+			CarModel savedCar = carService.saveCar(carModel);
+			return ResponseEntity.ok(savedCar);
+		} catch (IllegalArgumentException e) {
+			// Captura a exceção de placa inválida e retorna um bad request
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+		}
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<Car> getCarById(@PathVariable Long id) {
+	public ResponseEntity<CarModel> getCarById(@PathVariable Long id) {
 		return carRepository.findById(id).map(car -> ResponseEntity.ok().body(car))
 				.orElse(ResponseEntity.notFound().build());
 	}
@@ -57,14 +72,24 @@ public class CarController {
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<String> updateCar(@PathVariable Long id, @RequestBody Car carDetails) {
-		return carRepository.findById(id).map(car -> {
-			car.setBrand(carDetails.getBrand());
-			car.setModel(carDetails.getModel());
-			car.setYear(carDetails.getYear());
-			carRepository.save(car);
-			return ResponseEntity.ok("Carro atualizado com sucesso!");
-		}).orElse(((BodyBuilder) ResponseEntity.notFound()).body("Carro não encontrado!"));
+	public ResponseEntity<?> updateCar(@PathVariable Long id, @RequestBody CarModel carDetails) {
+	    if (carDetails.getPlate() == null || carDetails.getPlate().isEmpty()) {
+	        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("O campo 'plate' é obrigatório.");
+	    }
+
+	    return carRepository.findById(id).map(car -> {
+	        try {
+	            car.setBrand(carDetails.getBrand());
+	            car.setModel(carDetails.getModel());
+	            car.setYear(carDetails.getYear());
+	            car.setPlate(carDetails.getPlate());
+	            CarModel updatedCar = carService.saveCar(car);
+	            return ResponseEntity.ok(updatedCar);
+	        } catch (IllegalArgumentException e) {
+	            // Captura a exceção de placa inválida e retorna um bad request
+	            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+	        }
+	    }).orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).body("Carro não encontrado!"));
 	}
 
 	// Add more endpoints as needed

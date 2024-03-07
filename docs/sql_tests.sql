@@ -5,3 +5,6 @@ WHERE model = 'Macan';
 
 commit;
 
+SELECT VERSION();
+
+ALTER TABLE car ADD COLUMN Plate VARCHAR(255);

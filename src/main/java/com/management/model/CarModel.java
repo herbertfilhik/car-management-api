@@ -6,7 +6,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
-public class Car {
+public class CarModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,10 +17,10 @@ public class Car {
     private Integer year;
 
     // Constructors, getters, and setters
-    public Car() {
+    public CarModel() {
     }
 
-    public Car(String brand, String model, String plate, Integer year) {
+    public CarModel(String brand, String model, String plate, Integer year) {
         this.brand = brand;
         this.model = model;
         this.year = year;
@@ -66,10 +66,5 @@ public class Car {
 
 	public void setPlate(String plate) {
 		this.plate = plate;
-	}
-
-	public String getLicensePlate() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 }
