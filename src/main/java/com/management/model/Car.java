@@ -13,19 +13,21 @@ public class Car {
     private Long id;
     private String brand;
     private String model;
+    private String plate;
     private Integer year;
 
     // Constructors, getters, and setters
     public Car() {
     }
 
-    public Car(String brand, String model, Integer year) {
+    public Car(String brand, String model, String plate, Integer year) {
         this.brand = brand;
         this.model = model;
         this.year = year;
+        this.plate = plate;
     }
 
-    // Getters and Setters
+	// Getters and Setters
     public Long getId() {
         return id;
     }
@@ -57,4 +59,17 @@ public class Car {
     public void setYear(Integer year) {
         this.year = year;
     }
+
+    public String getPlate() {
+		return plate;
+	}
+
+	public void setPlate(String plate) {
+		this.plate = plate;
+	}
+
+	public String getLicensePlate() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
