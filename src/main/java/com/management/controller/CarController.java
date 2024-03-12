@@ -30,16 +30,16 @@ public class CarController {
 
 	@PostMapping
 	public ResponseEntity<?> addCar(@RequestBody CarModel carModel) {
-		try {
-			Optional<CarModel> savedCar = carService.saveCar(carModel);
-			if (savedCar.isPresent()) {
-				return ResponseEntity.ok(savedCar.get());
-			} else {
-				return ResponseEntity.status(HttpStatus.CONFLICT).body("Carro já incluído anteriormente.");
-			}
-		} catch (IllegalArgumentException e) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-		}
+	    try {
+	        Optional<CarModel> savedCar = carService.saveCar(carModel);
+	        if (savedCar.isPresent()) {
+	            return ResponseEntity.status(HttpStatus.CREATED).body(savedCar.get());
+	        } else {
+	            return ResponseEntity.status(HttpStatus.CONFLICT).body("Carro já incluído anteriormente.");
+	        }
+	    } catch (IllegalArgumentException e) {
+	        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+	    }
 	}
 
 	@GetMapping("/{id}")
