@@ -39,6 +39,17 @@ public class CarService {
 		}
 	}
 
+	public Optional<CarModel> updateCar(Long id, CarModel carDetails) {
+		return carRepository.findById(id).map(car -> {
+			validateLicensePlate(carDetails.getPlate()); // Valida a placa
+			car.setBrand(carDetails.getBrand()); // Atualiza a marca
+			car.setModel(carDetails.getModel()); // Atualiza o modelo
+			car.setYear(carDetails.getYear()); // Atualiza o ano
+			car.setPlate(carDetails.getPlate()); // Atualiza a placa
+			return Optional.of(carRepository.save(car)); // Salva o carro atualizado
+		}).orElse(Optional.empty()); // Se não encontrar o carro, retorna um Optional vazio
+	}
+
 	private void validateLicensePlate(String licensePlate) {
 		// Supondo que a placa deva seguir o padrão Mercosul: ABC1D23 ou ABC1234
 		Pattern pattern = Pattern.compile("[A-Z]{3}[0-9][A-Z0-9][0-9]{2}");

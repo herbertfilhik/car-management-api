@@ -30,16 +30,16 @@ public class CarController {
 
 	@PostMapping
 	public ResponseEntity<?> addCar(@RequestBody CarModel carModel) {
-	    try {
-	        Optional<CarModel> savedCar = carService.saveCar(carModel);
-	        if (savedCar.isPresent()) {
-	            return ResponseEntity.ok(savedCar.get());
-	        } else {
-	            return ResponseEntity.status(HttpStatus.CONFLICT).body("Carro já incluído anteriormente.");
-	        }
-	    } catch (IllegalArgumentException e) {
-	        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-	    }
+		try {
+			Optional<CarModel> savedCar = carService.saveCar(carModel);
+			if (savedCar.isPresent()) {
+				return ResponseEntity.ok(savedCar.get());
+			} else {
+				return ResponseEntity.status(HttpStatus.CONFLICT).body("Carro já incluído anteriormente.");
+			}
+		} catch (IllegalArgumentException e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+		}
 	}
 
 	@GetMapping("/{id}")
@@ -63,23 +63,16 @@ public class CarController {
 
 	@PutMapping("/{id}")
 	public ResponseEntity<?> updateCar(@PathVariable Long id, @RequestBody CarModel carDetails) {
-	    if (carDetails.getPlate() == null || carDetails.getPlate().isEmpty()) {
-	        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("O campo 'plate' é obrigatório.");
-	    }
+		if (carDetails.getPlate() == null || carDetails.getPlate().isEmpty()) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("O campo 'plate' é obrigatório.");
+		}
 
-	    return carRepository.findById(id).map(car -> {
-	        try {
-	            car.setBrand(carDetails.getBrand());
-	            car.setModel(carDetails.getModel());
-	            car.setYear(carDetails.getYear());
-	            car.setPlate(carDetails.getPlate());
-	            Optional<CarModel> updatedCar = carService.saveCar(car);
-	            return ResponseEntity.ok(updatedCar);
-	        } catch (IllegalArgumentException e) {
-	            // Captura a exceção de placa inválida e retorna um bad request
-	            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-	        }
-	    }).orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).body("Carro não encontrado!"));
+		Optional<CarModel> updatedCar = carService.updateCar(id, carDetails);
+		if (updatedCar.isPresent()) {
+			return ResponseEntity.ok(updatedCar.get());
+		} else {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Carro não encontrado!");
+		}
 	}
 
 	// Add more endpoints as needed
