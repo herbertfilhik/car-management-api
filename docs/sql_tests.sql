@@ -7,6 +7,6 @@ commit;
 
 SELECT VERSION();
 
-ALTER TABLE car_model ADD COLUMN plate VARCHAR(255);
-
+ALTER TABLE car_model ADD COLUMN license_plate VARCHAR(255);
 ALTER TABLE car_model CHANGE COLUMN plate license_plate VARCHAR(255);
+ALTER TABLE car_model DROP COLUMN license_plate;

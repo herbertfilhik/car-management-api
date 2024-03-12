@@ -63,8 +63,8 @@ public class CarController {
 
 	@PutMapping("/{id}")
 	public ResponseEntity<?> updateCar(@PathVariable Long id, @RequestBody CarModel carDetails) {
-		if (carDetails.getPlate() == null || carDetails.getPlate().isEmpty()) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("O campo 'plate' é obrigatório.");
+		if (carDetails.getLicensePlate() == null || carDetails.getLicensePlate().isEmpty()) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("O campo 'license_plate' é obrigatório.");
 		}
 
 		Optional<CarModel> updatedCar = carService.updateCar(id, carDetails);

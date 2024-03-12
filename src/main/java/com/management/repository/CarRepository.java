@@ -11,5 +11,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CarRepository extends JpaRepository<CarModel, Long> {
 
-	Optional<CarModel> findByBrandAndModelAndYearAndPlate(String brand, String model, Integer year, String plate);
+	Optional<CarModel> findByBrandAndModelAndYearAndLicensePlate(String brand, String model, Integer year, String licensePlate);
 }

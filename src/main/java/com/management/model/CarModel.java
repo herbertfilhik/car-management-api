@@ -5,6 +5,7 @@ import javax.validation.constraints.NotEmpty;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Column;
 
 @Entity
 public class CarModel {
@@ -12,26 +13,29 @@ public class CarModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String brand;
     private String model;
 
-    @NotEmpty(message = "O campo 'plate' é obrigatório.")
-    private String plate;
+    @NotEmpty(message = "O campo 'license_plate' é obrigatório.")
+    @Column(name = "license_plate") // Assegura o mapeamento correto para o nome da coluna no banco de dados
+    private String licensePlate; // Nome da variável em camelCase
 
     private Integer year;
 
-    // Constructors, getters, and setters
+    // Construtor padrão necessário para o JPA
     public CarModel() {
     }
 
-    public CarModel(String brand, String model, String plate, Integer year) {
+    // Construtor com parâmetros
+    public CarModel(String brand, String model, String licensePlate, Integer year) {
         this.brand = brand;
         this.model = model;
+        this.licensePlate = licensePlate;
         this.year = year;
-        this.plate = plate;
     }
 
-	// Getters and Setters
+    // Getters e Setters
     public Long getId() {
         return id;
     }
@@ -64,11 +68,11 @@ public class CarModel {
         this.year = year;
     }
 
-    public String getPlate() {
-		return plate;
-	}
+    public String getLicensePlate() {
+        return licensePlate;
+    }
 
-	public void setPlate(String plate) {
-		this.plate = plate;
-	}
+    public void setLicensePlate(String licensePlate) {
+        this.licensePlate = licensePlate;
+    }
 }
