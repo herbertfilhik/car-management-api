@@ -1,6 +1,7 @@
 package com.management.model;
 
 import jakarta.persistence.Entity;
+import javax.validation.constraints.NotEmpty;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -13,7 +14,10 @@ public class CarModel {
     private Long id;
     private String brand;
     private String model;
+
+    @NotEmpty(message = "O campo 'plate' é obrigatório.")
     private String plate;
+
     private Integer year;
 
     // Constructors, getters, and setters

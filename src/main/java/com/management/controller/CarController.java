@@ -30,10 +30,6 @@ public class CarController {
 
 	@PostMapping
 	public ResponseEntity<?> addCar(@RequestBody CarModel carModel) {
-	    if (carModel.getPlate() == null || carModel.getPlate().isEmpty()) {
-	        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("O campo 'plate' é obrigatório.");
-	    }
-
 	    try {
 	        Optional<CarModel> savedCar = carService.saveCar(carModel);
 	        if (savedCar.isPresent()) {

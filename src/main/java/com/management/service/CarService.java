@@ -19,7 +19,15 @@ public class CarService {
 	}
 
 	public Optional<CarModel> saveCar(CarModel carModel) {
-		validateLicensePlate(carModel.getPlate());
+		// Verifica se a placa é null antes de validar
+		if (carModel.getPlate() != null) {
+			validateLicensePlate(carModel.getPlate());
+		} else {
+			// Considerar lançar uma exceção ou tratar o caso de placa null conforme a regra
+			// de negócio
+			throw new IllegalArgumentException("A placa do veículo não pode ser nula.");
+		}
+
 		Optional<CarModel> existingCar = carRepository.findByBrandAndModelAndYearAndPlate(carModel.getBrand(),
 				carModel.getModel(), carModel.getYear(), carModel.getPlate());
 		if (existingCar.isPresent()) {
