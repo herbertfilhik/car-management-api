@@ -30,26 +30,20 @@ public class CarController {
 
 	@PostMapping
 	public ResponseEntity<?> addCar(@RequestBody CarModel carModel) {
-		if (carModel.getPlate() == null || carModel.getPlate().isEmpty()) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("O campo 'plate' é obrigatório.");
-		}
+	    if (carModel.getPlate() == null || carModel.getPlate().isEmpty()) {
+	        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("O campo 'plate' é obrigatório.");
+	    }
 
-		try {
-			// Verifica se já existe um carro com a mesma marca, modelo e ano
-			Optional<CarModel> existingCar = carRepository.findByBrandAndModelAndYearAndPlate(carModel.getBrand(), carModel.getModel(),
-					carModel.getYear(), carModel.getPlate());
-			if (existingCar.isPresent()) {
-				// Se já existir, retorna uma resposta de conflito
-				return ResponseEntity.status(HttpStatus.CONFLICT).body("Carro já incluído anteriormente.");
-			}
-
-			// Se não existir, tenta salvar o novo carro e valida a placa
-			CarModel savedCar = carService.saveCar(carModel);
-			return ResponseEntity.ok(savedCar);
-		} catch (IllegalArgumentException e) {
-			// Captura a exceção de placa inválida e retorna um bad request
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-		}
+	    try {
+	        Optional<CarModel> savedCar = carService.saveCar(carModel);
+	        if (savedCar.isPresent()) {
+	            return ResponseEntity.ok(savedCar.get());
+	        } else {
+	            return ResponseEntity.status(HttpStatus.CONFLICT).body("Carro já incluído anteriormente.");
+	        }
+	    } catch (IllegalArgumentException e) {
+	        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+	    }
 	}
 
 	@GetMapping("/{id}")
@@ -83,7 +77,7 @@ public class CarController {
 	            car.setModel(carDetails.getModel());
 	            car.setYear(carDetails.getYear());
 	            car.setPlate(carDetails.getPlate());
-	            CarModel updatedCar = carService.saveCar(car);
+	            Optional<CarModel> updatedCar = carService.saveCar(car);
 	            return ResponseEntity.ok(updatedCar);
 	        } catch (IllegalArgumentException e) {
 	            // Captura a exceção de placa inválida e retorna um bad request
