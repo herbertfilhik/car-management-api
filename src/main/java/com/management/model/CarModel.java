@@ -1,7 +1,12 @@
 package com.management.model;
 
 import jakarta.persistence.Entity;
+
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
+
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -14,13 +19,22 @@ public class CarModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "A marca é obrigatória.")
+    @Size(max = 255, message = "A marca deve ter no máximo 255 caracteres.")
+    @Column(name = "brand")
     private String brand;
+    
+    @NotBlank(message = "O modelo é obrigatório.")
+    @Size(max = 255, message = "O modelo deve ter no máximo 255 caracteres.")
+    @Column(name = "model")
     private String model;
 
     @NotEmpty(message = "O campo 'license_plate' é obrigatório.")
     @Column(name = "license_plate") // Assegura o mapeamento correto para o nome da coluna no banco de dados
     private String licensePlate; // Nome da variável em camelCase
 
+    @Min(value = 1900, message = "O ano do carro deve ser maior que 1900.")
+    @Column(name = "year")
     private Integer year;
 
     // Construtor padrão necessário para o JPA

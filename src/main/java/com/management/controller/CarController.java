@@ -29,13 +29,19 @@ public class CarController {
 
 	@PostMapping
 	public ResponseEntity<?> addCar(@RequestBody @Valid CarModel carModel) {
-	    Optional<CarModel> savedCar = carService.saveCar(carModel);
-	    if (savedCar.isPresent()) {
-	        return ResponseEntity.status(HttpStatus.CREATED).body(savedCar.get());
-	    } else {
-	        return ResponseEntity.status(HttpStatus.CONFLICT).body("Carro já incluído anteriormente.");
+	    try {
+	        Optional<CarModel> savedCar = carService.saveCar(carModel);
+	        if (savedCar.isPresent()) {
+	            return ResponseEntity.status(HttpStatus.CREATED).body(savedCar.get());
+	        } else {
+	            return ResponseEntity.status(HttpStatus.CONFLICT).body("Carro já incluído anteriormente.");
+	        }
+	    } catch (IllegalArgumentException e) {
+	        // Aqui você trata a exceção específica lançada pelo seu serviço
+	        return ResponseEntity.badRequest().body(e.getMessage());
 	    }
 	}
+
 
 	@GetMapping("/{id}")
 	public ResponseEntity<CarModel> getCarById(@PathVariable Long id) {
