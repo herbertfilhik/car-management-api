@@ -18,14 +18,11 @@ import java.util.Optional;
 public class CarController {
 
 	@Autowired
-	private CarRepository carRepository;
-
-	@Autowired
 	private CarService carService;
 
 	@GetMapping
 	public List<CarModel> getAllCars() {
-		return carRepository.findAll();
+	    return carService.findAllCars();
 	}
 
 	@PostMapping
@@ -44,21 +41,19 @@ public class CarController {
 
 	@GetMapping("/{id}")
 	public ResponseEntity<CarModel> getCarById(@PathVariable Long id) {
-		return carRepository.findById(id).map(car -> ResponseEntity.ok().body(car))
-				.orElse(ResponseEntity.notFound().build());
+	    return carService.findCarById(id)
+	            .map(car -> ResponseEntity.ok().body(car))
+	            .orElse(ResponseEntity.notFound().build());
 	}
-
+	
 	@DeleteMapping("/{id}")
 	public ResponseEntity<String> deleteCar(@PathVariable Long id) {
-		// Verifica se o carro com o ID fornecido existe
-		boolean exists = carRepository.existsById(id);
-		if (exists) {
-			carRepository.deleteById(id);
-			return ResponseEntity.ok("Carro deletado com sucesso!");
-		} else {
-			// return ResponseEntity.notFound().build();
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Carro não encontrado!");
-		}
+	    try {
+	        carService.deleteCar(id);
+	        return ResponseEntity.ok("Carro deletado com sucesso!");
+	    } catch (IllegalArgumentException e) {
+	        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+	    }
 	}
 
 	@PutMapping("/{id}")
