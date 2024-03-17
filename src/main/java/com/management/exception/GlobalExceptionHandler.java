@@ -19,4 +19,31 @@ public class GlobalExceptionHandler {
         // Retorna um ResponseEntity com bad request e a mensagem da exceção
         return ResponseEntity.badRequest().body(e.getMessage());
     }
+    
+    @ExceptionHandler(InvalidLicensePlateException.class)
+    public ResponseEntity<String> handleOutraExcecao(InvalidLicensePlateException  e) {
+        // Lógica para lidar com a exceção "OutraExcecao"
+        return ResponseEntity.badRequest().body("Placa de licença inválida: " + e.getMessage());
+    }
+    
+    /*@ExceptionHandler(YearOutOfRangeException.class)
+    public ResponseEntity<String> handleOutraExcecao(YearOutOfRangeException  e) {
+        // Lógica para lidar com a exceção "OutraExcecao"
+        return ResponseEntity.badRequest().body("Message: " + e.getMessage());
+    }*/
+    
+    @ExceptionHandler(YearOutOfRangeException.class)
+    public ResponseEntity<?> handleYearOutOfRangeException(YearOutOfRangeException e) {        
+        return ResponseEntity.badRequest().body("Message: " + e.getMessage());
+    }
+    
+    @ExceptionHandler(InvalidModelException.class)
+    public ResponseEntity<String> handleOutraExcecao(InvalidModelException  e) {
+        return ResponseEntity.badRequest().body("Message: " + e.getMessage());
+    }
+    
+    @ExceptionHandler(InvalidBrandException.class)
+    public ResponseEntity<String> handleOutraExcecao(InvalidBrandException  e) {
+        return ResponseEntity.badRequest().body("Message: " + e.getMessage());
+    }    
 }

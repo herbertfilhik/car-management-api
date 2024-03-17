@@ -1,6 +1,8 @@
 package com.management.service;
 
 import com.management.exception.CarAlreadyExistsException;
+import com.management.exception.YearOutOfRangeException;
+import com.management.exception.InvalidModelException;
 import com.management.model.CarModel;
 import com.management.repository.CarRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +22,10 @@ public class CarService {
 		this.carRepository = carRepository;
 	}
 
-    public CarModel saveCar(CarModel carModel) {
+    public CarModel saveCar(CarModel carModel) {        
+        validateBrandNotEmpty(carModel.getBrand());
+        validateModelNotEmpty(carModel.getModel());
+        validateRangeYear(carModel.getYear());
         validateLicensePlate(carModel.getLicensePlate());
 
         Optional<CarModel> existingCar = carRepository.findByBrandAndModelAndYearAndLicensePlate(carModel.getBrand(), carModel.getModel(), carModel.getYear(), carModel.getLicensePlate());        																						
@@ -33,12 +38,18 @@ public class CarService {
 
 	public Optional<CarModel> updateCar(Long id, CarModel carDetails) {
 		return carRepository.findById(id).map(car -> {
+			validateBrandNotEmpty(carDetails.getBrand());
+			validateModelNotEmpty(carDetails.getModel()); // Atualiza o modelo
+			validateRangeYear(carDetails.getYear()); // Depois valida o ano atualizado
 			validateLicensePlate(carDetails.getLicensePlate()); // Valida a placa
+			
 			car.setBrand(carDetails.getBrand()); // Atualiza a marca
-			car.setModel(carDetails.getModel()); // Atualiza o modelo
-			car.setYear(carDetails.getYear()); // Atualiza o ano
+			car.setModel(carDetails.getModel());
+			car.setYear(carDetails.getYear()); // Atualiza o ano primeiro
 			car.setLicensePlate(carDetails.getLicensePlate()); // Atualiza a placa
+			
 			return Optional.of(carRepository.save(car)); // Salva o carro atualizado
+			
 		}).orElse(Optional.empty()); // Se não encontrar o carro, retorna um Optional vazio
 	}
 
@@ -49,7 +60,25 @@ public class CarService {
 			throw new IllegalArgumentException("Formato de placa inválido.");
 		}
 	}
+	
+	private void validateRangeYear(Integer year) {
+	    if (year == null || year < 1900) {
+	        throw new YearOutOfRangeException("O ano deve ser maior que 1900.");
+	    }
+	}
+	
+	private void validateModelNotEmpty(String model) {
+	    if (model == null || model.trim().isEmpty()) {
+	        throw new InvalidModelException("O model não pode ser vazio.");	        
+	    }
+	}
 
+	private void validateBrandNotEmpty(String brand) {
+	    if (brand == null || brand.trim().isEmpty()) {
+	        throw new InvalidModelException("A brand não pode ser vazio.");       
+	    }
+	}
+	
 	public List<CarModel> findAllCars() {
 		return carRepository.findAll();
 	}
