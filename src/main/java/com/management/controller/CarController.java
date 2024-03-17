@@ -44,7 +44,8 @@ public class CarController {
 	public ResponseEntity<String> deleteCar(@PathVariable Long id) {
 		try {
 			carService.deleteCar(id);
-			return ResponseEntity.ok("Carro deletado com sucesso!");
+			//return ResponseEntity.ok("Carro deletado com sucesso!");
+			return ResponseEntity.noContent().build();
 		} catch (IllegalArgumentException e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
 		}
