@@ -40,13 +40,12 @@ public class CarModel {
     // Construtor padrão necessário para o JPA
     public CarModel() {
     }
-
-    // Construtor com parâmetros
-    public CarModel(String brand, String model, String licensePlate, Integer year) {
+    
+    public CarModel(String brand, String model, Integer year, String licensePlate) {
         this.brand = brand;
         this.model = model;
-        this.licensePlate = licensePlate;
         this.year = year;
+        this.licensePlate = licensePlate;
     }
 
     // Getters e Setters

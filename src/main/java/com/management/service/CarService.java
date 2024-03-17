@@ -1,5 +1,6 @@
 package com.management.service;
 
+import com.management.exception.CarAlreadyExistsException;
 import com.management.model.CarModel;
 import com.management.repository.CarRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,26 +20,16 @@ public class CarService {
 		this.carRepository = carRepository;
 	}
 
-	public Optional<CarModel> saveCar(CarModel carModel) {
-		// Verifica se a placa é null antes de validar
-		if (carModel.getLicensePlate() != null) {
-			validateLicensePlate(carModel.getLicensePlate());
-		} else {
-			// Considerar lançar uma exceção ou tratar o caso de placa null conforme a regra
-			// de negócio
-			throw new IllegalArgumentException("A placa do veículo não pode ser nula.");
-		}
+    public CarModel saveCar(CarModel carModel) {
+        validateLicensePlate(carModel.getLicensePlate());
 
-		Optional<CarModel> existingCar = carRepository.findByBrandAndModelAndYearAndLicensePlate(carModel.getBrand(),
-				carModel.getModel(), carModel.getYear(), carModel.getLicensePlate());
-		if (existingCar.isPresent()) {
-			// Carro já existe, então retornamos um Optional vazio para indicar conflito
-			return Optional.empty();
-		} else {
-			// Carro não existe, então salvamos e retornamos em um Optional
-			return Optional.of(carRepository.save(carModel));
-		}
-	}
+        Optional<CarModel> existingCar = carRepository.findByBrandAndModelAndYearAndLicensePlate(carModel.getBrand(), carModel.getModel(), carModel.getYear(), carModel.getLicensePlate());        																						
+        if (existingCar.isPresent()) {
+            throw new CarAlreadyExistsException("Carro já incluído anteriormente.");
+        }
+
+        return carRepository.save(carModel);
+    }
 
 	public Optional<CarModel> updateCar(Long id, CarModel carDetails) {
 		return carRepository.findById(id).map(car -> {

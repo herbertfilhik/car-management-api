@@ -1,5 +1,6 @@
 package com.management.controller;
 
+import com.management.exception.CarAlreadyExistsException;
 import com.management.model.CarModel;
 import com.management.repository.CarRepository;
 import com.management.service.CarService;
@@ -24,40 +25,29 @@ public class CarController {
 
 	@GetMapping
 	public List<CarModel> getAllCars() {
-	    return carService.findAllCars();
+		return carService.findAllCars();
 	}
 
 	@PostMapping
 	public ResponseEntity<?> addCar(@RequestBody @Valid CarModel carModel) {
-	    try {
-	        Optional<CarModel> savedCar = carService.saveCar(carModel);
-	        if (savedCar.isPresent()) {
-	            return ResponseEntity.status(HttpStatus.CREATED).body(savedCar.get());
-	        } else {
-	            return ResponseEntity.status(HttpStatus.CONFLICT).body("Carro já incluído anteriormente.");
-	        }
-	    } catch (IllegalArgumentException e) {
-	        // Aqui você trata a exceção específica lançada pelo seu serviço
-	        return ResponseEntity.badRequest().body(e.getMessage());
-	    }
+		CarModel savedCar = carService.saveCar(carModel);
+		return ResponseEntity.status(HttpStatus.CREATED).body(savedCar);
 	}
-
 
 	@GetMapping("/{id}")
 	public ResponseEntity<CarModel> getCarById(@PathVariable Long id) {
-	    return carService.findCarById(id)
-	            .map(car -> ResponseEntity.ok().body(car))
-	            .orElse(ResponseEntity.notFound().build());
+		return carService.findCarById(id).map(car -> ResponseEntity.ok().body(car))
+				.orElse(ResponseEntity.notFound().build());
 	}
-	
+
 	@DeleteMapping("/{id}")
 	public ResponseEntity<String> deleteCar(@PathVariable Long id) {
-	    try {
-	        carService.deleteCar(id);
-	        return ResponseEntity.ok("Carro deletado com sucesso!");
-	    } catch (IllegalArgumentException e) {
-	        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-	    }
+		try {
+			carService.deleteCar(id);
+			return ResponseEntity.ok("Carro deletado com sucesso!");
+		} catch (IllegalArgumentException e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+		}
 	}
 
 	@PutMapping("/{id}")
