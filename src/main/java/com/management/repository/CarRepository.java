@@ -1,6 +1,6 @@
 package com.management.repository;
 
-import com.management.model.Car;
+import com.management.model.CarModel;
 
 import java.util.Optional;
 
@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface CarRepository extends JpaRepository<Car, Long> {
+public interface CarRepository extends JpaRepository<CarModel, Long> {
 
-	Optional<Car> findByBrandAndModelAndYear(String brand, String model, Integer year);
+	Optional<CarModel> findByBrandAndModelAndYearAndLicensePlate(String brand, String model, Integer year, String licensePlate);
 }
