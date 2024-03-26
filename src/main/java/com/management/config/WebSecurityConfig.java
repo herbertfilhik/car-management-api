@@ -16,28 +16,6 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig {
 
-//    @SuppressWarnings("deprecation")
-//    @Bean
-//    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-//        http
-//            .authorizeRequests()
-//                // Permitir acesso a recursos estáticos sem autenticação
-//                .requestMatchers("/css/**", "/js/**", "/images/**", "/login.css").permitAll()
-//                // Permitir acesso às páginas específicas sem autenticação
-//                .requestMatchers("/", "/home", "/login").permitAll()
-//                // Todas as outras solicitações exigem autenticação
-//                .anyRequest().authenticated()
-//                .and()
-//            .formLogin()
-//                .loginPage("/login")
-//                .permitAll()
-//                .and()
-//            .logout()
-//                .permitAll();
-//
-//        return http.build();
-//    }
-
     @Bean
     public UserDetailsService userDetailsService() {
         UserDetails user =
