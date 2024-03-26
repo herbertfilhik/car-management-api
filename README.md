@@ -95,3 +95,6 @@ Este guia assume que você já tenha a coleção do Postman para a Car Managemen
 ### Leitura para referencia
 - https://spring.io/guides/gs/securing-web
 - https://github.com/spring-guides/gs-securing-web
+
+### Acesso ao Swagger
+- http://localhost:9090/swagger-ui/index.html
