@@ -98,3 +98,41 @@ Este guia assume que você já tenha a coleção do Postman para a Car Managemen
 
 ### Acesso ao Swagger
 - http://localhost:9090/swagger-ui/index.html
+
+### Testes Unitarios com JaCoCo
+
+- Inclusao do plugin
+
+```bash
+<plugin>
+    <groupId>org.jacoco</groupId>
+    <artifactId>jacoco-maven-plugin</artifactId>
+    <version>0.8.7</version> <!-- Use a versão mais recente -->
+    <executions>
+        <execution>
+            <goals>
+                <goal>prepare-agent</goal>
+            </goals>
+        </execution>
+        <execution>
+            <id>report</id>
+            <phase>prepare-package</phase>
+            <goals>
+                <goal>report</goal>
+            </goals>
+        </execution>
+    </executions>
+</plugin>
+```
+
+- Colha o report executando o comando
+
+```bash
+mvn clean verify
+```
+
+- Verifique o report em
+
+```bash
+target/site/jacoco
+```
