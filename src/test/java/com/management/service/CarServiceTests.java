@@ -27,9 +27,9 @@ public class CarServiceTests {
 
 	@InjectMocks
 	private CarService carService;
-	
-    private CarModel existingCar;
-    private CarModel carDetails;
+
+	private CarModel existingCar;
+	private CarModel carDetails;
 
 	private CarModel carModel;
 
@@ -40,19 +40,25 @@ public class CarServiceTests {
 		carModel.setModel("TestModel");
 		carModel.setYear(2020);
 		carModel.setLicensePlate("ABC1D23");
-		
-        existingCar = new CarModel();
-        existingCar.setId(1L);
-        existingCar.setBrand("Ford");
-        existingCar.setModel("Fiesta");
-        existingCar.setYear(2019);
-        existingCar.setLicensePlate("XYZ1234");
 
-        carDetails = new CarModel();
-        carDetails.setBrand("Tesla");
-        carDetails.setModel("Model S");
-        carDetails.setYear(2020);        
-        carDetails.setLicensePlate("TES1A23");
+		existingCar = new CarModel();
+		existingCar.setId(1L);
+		existingCar.setBrand("Ford");
+		existingCar.setModel("Fiesta");
+		existingCar.setYear(2019);
+		existingCar.setLicensePlate("XYZ1234");
+
+		carDetails = new CarModel();
+		carDetails.setBrand("Tesla");
+		carDetails.setModel("Model S");
+		carDetails.setYear(2020);
+		carDetails.setLicensePlate("TES1A23");
+
+		carModel = new CarModel();
+		carModel.setBrand("Toyota");
+		carModel.setModel("Corolla");
+		carModel.setYear(2020);
+		carModel.setLicensePlate("ABC1D23");
 
 	}
 
@@ -143,6 +149,25 @@ public class CarServiceTests {
 		Optional<CarModel> result = carService.updateCar(2L, carDetails);
 
 		assertFalse(result.isPresent()); // Verifica se o resultado é um Optional.empty()
+	}
+
+	@Test
+	void validateRangeYear_WhenYearIsInvalid_ThrowsException() {
+		carModel.setYear(1800); // Ano inválido
+		assertThrows(YearOutOfRangeException.class, () -> carService.saveCar(carModel),
+				"O ano deve ser maior que 1900.");
+	}
+
+	@Test
+	void validateModelNotEmpty_WhenModelIsEmpty_ThrowsException() {
+		carModel.setModel(""); // Modelo vazio
+		assertThrows(InvalidModelException.class, () -> carService.saveCar(carModel), "O model não pode ser vazio.");
+	}
+
+	@Test
+	void validateBrandNotEmpty_WhenBrandIsEmpty_ThrowsException() {
+		carModel.setBrand(""); // Marca vazia
+		assertThrows(InvalidModelException.class, () -> carService.saveCar(carModel), "A brand não pode ser vazio.");
 	}
 
 	// Adicione mais testes conforme necessário para cobrir todos os métodos e
